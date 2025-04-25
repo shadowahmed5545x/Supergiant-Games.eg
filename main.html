@@ -94,7 +94,6 @@
             border-top: 2px solid rgb(255, 0, 0);
         }
 
-        /* إعدادات دعم البوت */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -173,7 +172,6 @@
             border-radius: 5px;
         }
 
-        /* المحادثات مع المستخدم */
         .user-message, .bot-message {
             margin: 10px 0;
             padding: 10px;
@@ -227,6 +225,17 @@
                 <p>استمتع بتحديات جديدة وتحسينات في الحركة والرسومات في الإصدار الثاني من لعبة Parkour. انغمس في تجربة لعب محسنة وأكثر إمتاعًا.</p>
             </div>
 
+            <!-- Dark Maze -->
+            <div class="game">
+                <a href="https://example.com/dark-maze" target="_blank">
+                    <img src="dark-maze.jpg" alt="Dark Maze">
+                </a>
+                <h3>Dark Maze</h3>
+                <p>استمتع بتجربة لعبة Dark Maze، حيث التحدي والإثارة في متاهة مظلمة مليئة بالأسرار.</p>
+                <button onclick="requestGame()">طلب اللعبة</button>
+                <p id="requestMessage" style="color: green; display: none;">تم طلب اللعبة بنجاح!</p>
+            </div>
+
         </div>
     </div>
 
@@ -234,12 +243,10 @@
         <p>© 2025 Supergiant Games Studio EG. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <!-- Chatbot Icon -->
     <div class="chatbot-container" onclick="toggleChatbox()">
         <span>🤖</span>
     </div>
 
-    <!-- Chatbox -->
     <div class="chatbox" id="chatbox">
         <div class="chatbox-header">
             <p>دعم بوت</p>
@@ -254,6 +261,19 @@
     </div>
 
     <script>
+        function requestGame() {
+            // إظهار رسالة تم طلب اللعبة
+            document.getElementById("requestMessage").style.display = "block";
+
+            // تفاصيل البريد الإلكتروني
+            const subject = "طلب لعبة من Supergiant Games Studio EG";
+            const body = "تم طلب لعبة Dark Maze من الموقع.";
+
+            // فتح نافذة Gmail مع التفاصيل المعبأة
+            const mailtoLink = `mailto:ahmedeskam61@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+
         function toggleChatbox() {
             const chatbox = document.getElementById('chatbox');
             chatbox.style.display = (chatbox.style.display === 'none' || chatbox.style.display === '') ? 'block' : 'none';
@@ -261,24 +281,23 @@
 
         function sendMessage() {
             const userMessage = document.getElementById('userMessage').value;
+            if (userMessage.trim() === "") return;
             const chatboxBody = document.getElementById('chatboxBody');
-
-            // إضافة رسالة المستخدم
             const userMessageElement = document.createElement('p');
-            userMessageElement.classList.add('user-message');
+            userMessageElement.className = 'user-message';
             userMessageElement.textContent = userMessage;
             chatboxBody.appendChild(userMessageElement);
+            document.getElementById('userMessage').value = '';
 
-            // إضافة رسالة البوت
+            const botResponse = "شكرًا على رسالتك! سنرد عليك قريبًا.";
             const botMessageElement = document.createElement('p');
-            botMessageElement.classList.add('bot-message');
-            botMessageElement.textContent = "شكرًا على رسالتك! نحن هنا للمساعدة.";
+            botMessageElement.className = 'bot-message';
+            botMessageElement.textContent = botResponse;
             chatboxBody.appendChild(botMessageElement);
 
-            // مسح حقل الإدخال بعد الإرسال
-            document.getElementById('userMessage').value = '';
-            chatboxBody.scrollTop = chatboxBody.scrollHeight;  // لتمرير المحادثة إلى الأسفل
+            chatboxBody.scrollTop = chatboxBody.scrollHeight; // Scroll to the bottom
         }
     </script>
+
 </body>
-</
+</html>
