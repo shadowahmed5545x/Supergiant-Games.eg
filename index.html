@@ -17,15 +17,9 @@
         }
 
         @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header {
@@ -87,6 +81,12 @@
             border-radius: 10px;
         }
 
+        .game a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
         footer {
             background-color: rgba(0, 0, 0, 0.6);
             color: rgb(255, 0, 0);
@@ -94,102 +94,17 @@
             border-top: 2px solid rgb(255, 0, 0);
         }
 
-        .chatbot-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 70px;
-            height: 70px;
-            background-color: rgb(255, 0, 0);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
+        /* New Styles for Countdown */
+        .countdown {
+            font-size: 2em;
+            color: rgb(255, 255, 0);
+            font-weight: bold;
+            margin-top: 30px;
         }
 
-        .chatbot-container:hover {
-            background-color: rgb(0, 0, 255);
-            transform: scale(1.1);
-        }
-
-        .chatbox {
-            display: none;
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 350px;
-            height: 450px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            color: white;
-            font-size: 1.1em;
-            overflow-y: auto;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .chatbox-header {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            color: rgb(255, 0, 0);
-        }
-
-        .chatbox-body {
-            max-height: 330px;
-            overflow-y: scroll;
-            padding-right: 10px;
-        }
-
-        .chatbox-footer {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .chatbox-footer input {
-            width: 80%;
-            padding: 10px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
-        }
-
-        .chatbox-footer button {
-            padding: 10px;
-            background-color: rgb(0, 0, 255);
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .user-message, .bot-message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .user-message {
-            background-color: rgb(0, 0, 255);
-            align-self: flex-end;
-            color: white;
-        }
-
-        .bot-message {
-            background-color: rgb(255, 0, 0);
-            align-self: flex-start;
-            color: white;
+        .game a.disabled {
+            pointer-events: none;
+            color: gray;
         }
     </style>
 </head>
@@ -209,33 +124,36 @@
 
             <!-- Parkour 1.0 -->
             <div class="game">
-                <a href="https://ahmedeslam.itch.io/parkour/devlog/825591/parkour" target="_blank">
+                <a href="https://ahmedeslam.itch.io/parkour/devlog/825591/parkour" id="parkourLink" class="disabled" target="_blank">
                     <img src="parkour.jpg" alt="Parkour 1.0">
+                    <h3>Parkour 1.0</h3>
+                    <p>انطلق في عالم من الحركة الحرة والقفز فوق المباني، وتسلق الجدران في لعبة Parkour 1.0، حيث يمكنك استعراض مهاراتك والتحدي في بيئة مثيرة.</p>
                 </a>
-                <h3>Parkour 1.0</h3>
-                <p>انطلق في عالم من الحركة الحرة والقفز فوق المباني، وتسلق الجدران في لعبة Parkour 1.0، حيث يمكنك استعراض مهاراتك والتحدي في بيئة مثيرة.</p>
             </div>
 
             <!-- Parkour 2.0 -->
             <div class="game">
-                <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">
+                <a href="https://ahmedeslam.itch.io/parkour-2" id="parkour2Link" class="disabled" target="_blank">
                     <img src="parkour2.jpg" alt="Parkour 2.0">
+                    <h3>Parkour 2.0</h3>
+                    <p>استمتع بتحديات جديدة وتحسينات في الحركة والرسومات في الإصدار الثاني من لعبة Parkour. انغمس في تجربة لعب محسنة وأكثر إمتاعًا.</p>
                 </a>
-                <h3>Parkour 2.0</h3>
-                <p>استمتع بتحديات جديدة وتحسينات في الحركة والرسومات في الإصدار الثاني من لعبة Parkour. انغمس في تجربة لعب محسنة وأكثر إمتاعًا.</p>
             </div>
 
             <!-- Dark Maze -->
             <div class="game">
-                <a href="https://example.com/dark-maze" target="_blank">
+                <a href="https://ahmedeslam.itch.io/darkmaze" id="darkMazeLink" class="disabled" target="_blank">
                     <img src="dark-maze.jpg" alt="Dark Maze">
+                    <h3>Dark Maze</h3>
+                    <p>استمتع بتجربة لعبة Dark Maze، حيث التحدي والإثارة في متاهة مظلمة مليئة بالأسرار.</p>
                 </a>
-                <h3>Dark Maze</h3>
-                <p>استمتع بتجربة لعبة Dark Maze، حيث التحدي والإثارة في متاهة مظلمة مليئة بالأسرار.</p>
-                <button onclick="requestGame()">طلب اللعبة</button>
-                <p id="requestMessage" style="color: green; display: none;">تم طلب اللعبة بنجاح!</p>
             </div>
 
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="countdown" id="countdown">
+            عداد التنزيلات سيصبح فعالًا بعد يوم الجمعة القادم.
         </div>
     </div>
 
@@ -243,60 +161,33 @@
         <p>© 2025 Supergiant Games Studio EG. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <div class="chatbot-container" onclick="toggleChatbox()">
-        <span>🤖</span>
-    </div>
-
-    <div class="chatbox" id="chatbox">
-        <div class="chatbox-header">
-            <p>دعم بوت</p>
-        </div>
-        <div class="chatbox-body" id="chatboxBody">
-            <p class="bot-message">مرحبًا! كيف يمكنني مساعدتك اليوم؟</p>
-        </div>
-        <div class="chatbox-footer">
-            <input type="text" id="userMessage" placeholder="اكتب رسالتك...">
-            <button onclick="sendMessage()">إرسال</button>
-        </div>
-    </div>
-
     <script>
-        function requestGame() {
-            // إظهار رسالة تم طلب اللعبة
-            document.getElementById("requestMessage").style.display = "block";
+        // Get current date and the next Friday date
+        const currentDate = new Date();
+        const nextFriday = new Date(currentDate);
+        nextFriday.setDate(currentDate.getDate() + ((5 - currentDate.getDay() + 7) % 7));
+        nextFriday.setHours(0, 0, 0, 0); // Set to midnight of the next Friday
 
-            // تفاصيل البريد الإلكتروني
-            const subject = "طلب لعبة من Supergiant Games Studio EG";
-            const body = "تم طلب لعبة Dark Maze من الموقع.";
-
-            // فتح نافذة Gmail مع التفاصيل المعبأة
-            const mailtoLink = `mailto:ahmedeskam61@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
+        // Function to check if it's after next Friday
+        function checkIfFriday() {
+            const now = new Date();
+            if (now >= nextFriday) {
+                // Enable the links after next Friday
+                document.getElementById('parkourLink').classList.remove('disabled');
+                document.getElementById('parkour2Link').classList.remove('disabled');
+                document.getElementById('darkMazeLink').classList.remove('disabled');
+                document.getElementById('countdown').innerText = "يمكنك الآن تنزيل الألعاب!";
+            } else {
+                const timeRemaining = nextFriday - now;
+                const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
+                const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerText = `سيتم تفعيل التنزيلات في ${hoursRemaining} ساعات و ${minutesRemaining} دقائق و ${secondsRemaining} ثواني.`;
+            }
         }
 
-        function toggleChatbox() {
-            const chatbox = document.getElementById('chatbox');
-            chatbox.style.display = (chatbox.style.display === 'none' || chatbox.style.display === '') ? 'block' : 'none';
-        }
-
-        function sendMessage() {
-            const userMessage = document.getElementById('userMessage').value;
-            if (userMessage.trim() === "") return;
-            const chatboxBody = document.getElementById('chatboxBody');
-            const userMessageElement = document.createElement('p');
-            userMessageElement.className = 'user-message';
-            userMessageElement.textContent = userMessage;
-            chatboxBody.appendChild(userMessageElement);
-            document.getElementById('userMessage').value = '';
-
-            const botResponse = "شكرًا على رسالتك! سنرد عليك قريبًا.";
-            const botMessageElement = document.createElement('p');
-            botMessageElement.className = 'bot-message';
-            botMessageElement.textContent = botResponse;
-            chatboxBody.appendChild(botMessageElement);
-
-            chatboxBody.scrollTop = chatboxBody.scrollHeight; // Scroll to the bottom
-        }
+        // Run the check on page load
+        setInterval(checkIfFriday, 1000); // Update every second
     </script>
 
 </body>
