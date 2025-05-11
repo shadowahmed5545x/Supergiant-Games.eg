@@ -93,19 +93,6 @@
             padding: 20px;
             border-top: 2px solid rgb(255, 0, 0);
         }
-
-        /* New Styles for Countdown */
-        .countdown {
-            font-size: 2em;
-            color: rgb(255, 255, 0);
-            font-weight: bold;
-            margin-top: 30px;
-        }
-
-        .game a.disabled {
-            pointer-events: none;
-            color: gray;
-        }
     </style>
 </head>
 <body>
@@ -124,7 +111,7 @@
 
             <!-- Parkour 1.0 -->
             <div class="game">
-                <a href="https://ahmedeslam.itch.io/parkour/devlog/825591/parkour" id="parkourLink" class="disabled" target="_blank">
+                <a href="https://ahmedeslam.itch.io/parkour/devlog/825591/parkour" id="parkourLink" target="_blank">
                     <img src="parkour.jpg" alt="Parkour 1.0">
                     <h3>Parkour 1.0</h3>
                     <p>انطلق في عالم من الحركة الحرة والقفز فوق المباني، وتسلق الجدران في لعبة Parkour 1.0، حيث يمكنك استعراض مهاراتك والتحدي في بيئة مثيرة.</p>
@@ -133,7 +120,7 @@
 
             <!-- Parkour 2.0 -->
             <div class="game">
-                <a href="https://ahmedeslam.itch.io/parkour-2" id="parkour2Link" class="disabled" target="_blank">
+                <a href="https://ahmedeslam.itch.io/parkour-2" id="parkour2Link" target="_blank">
                     <img src="parkour2.jpg" alt="Parkour 2.0">
                     <h3>Parkour 2.0</h3>
                     <p>استمتع بتحديات جديدة وتحسينات في الحركة والرسومات في الإصدار الثاني من لعبة Parkour. انغمس في تجربة لعب محسنة وأكثر إمتاعًا.</p>
@@ -142,7 +129,7 @@
 
             <!-- Dark Maze -->
             <div class="game">
-                <a href="https://ahmedeslam.itch.io/darkmaze" id="darkMazeLink" class="disabled" target="_blank">
+                <a href="https://ahmedeslam.itch.io/darkmaze" id="darkMazeLink" target="_blank">
                     <img src="dark-maze.jpg" alt="Dark Maze">
                     <h3>Dark Maze</h3>
                     <p>استمتع بتجربة لعبة Dark Maze، حيث التحدي والإثارة في متاهة مظلمة مليئة بالأسرار.</p>
@@ -150,45 +137,11 @@
             </div>
 
         </div>
-
-        <!-- Countdown Timer -->
-        <div class="countdown" id="countdown">
-            عداد التنزيلات سيصبح فعالًا بعد يوم الجمعة القادم.
-        </div>
     </div>
 
     <footer>
         <p>© 2025 Supergiant Games Studio EG. جميع الحقوق محفوظة.</p>
     </footer>
-
-    <script>
-        // Get current date and the next Friday date
-        const currentDate = new Date();
-        const nextFriday = new Date(currentDate);
-        nextFriday.setDate(currentDate.getDate() + ((5 - currentDate.getDay() + 7) % 7));
-        nextFriday.setHours(0, 0, 0, 0); // Set to midnight of the next Friday
-
-        // Function to check if it's after next Friday
-        function checkIfFriday() {
-            const now = new Date();
-            if (now >= nextFriday) {
-                // Enable the links after next Friday
-                document.getElementById('parkourLink').classList.remove('disabled');
-                document.getElementById('parkour2Link').classList.remove('disabled');
-                document.getElementById('darkMazeLink').classList.remove('disabled');
-                document.getElementById('countdown').innerText = "يمكنك الآن تنزيل الألعاب!";
-            } else {
-                const timeRemaining = nextFriday - now;
-                const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
-                const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-                document.getElementById('countdown').innerText = `سيتم تفعيل التنزيلات في ${hoursRemaining} ساعات و ${minutesRemaining} دقائق و ${secondsRemaining} ثواني.`;
-            }
-        }
-
-        // Run the check on page load
-        setInterval(checkIfFriday, 1000); // Update every second
-    </script>
 
 </body>
 </html>
