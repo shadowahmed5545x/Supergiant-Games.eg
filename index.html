@@ -3,172 +3,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supergiant Games Studio EG - Ahmed Eslam</title>
+  <title>Supergiant Games Studio EG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Cairo', sans-serif;
       direction: rtl;
-      background: #0a0a0a;
+      background: #0d0d0d;
       color: #fff;
+      overflow-x: hidden;
     }
 
+    /* ====== Header ====== */
     header {
-      background: #111;
-      padding: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      border-bottom: 2px solid #00f2ff;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+    header h1 {color: #00f2ff; font-size: 1.6em;}
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 25px;
+      transition: 0.3s;
+    }
+    header nav a:hover {color: #00f2ff;}
+
+    /* ====== Hero Section ====== */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      border-bottom: 2px solid #0070f3;
+      color: #fff;
+      overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') 
+                  center/cover no-repeat;
+    }
+    .overlay {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,40,0.7));
+    }
+    .hero h2 {
+      font-size: 1.6em;
+      color: #ddd;
+      margin-bottom: 15px;
+      animation: fadeDown 2s ease;
+    }
+    .hero h1 {
+      font-size: 3.5em;
+      color: #00f2ff;
+      text-shadow: 0 0 25px #00f2ff;
+      animation: glow 3s infinite alternate;
+    }
+    .hero p {
+      font-size: 1.3em;
+      max-width: 700px;
+      margin: 20px auto;
+      animation: fadeUp 2s ease;
+    }
+    .hero a {
+      text-decoration: none;
+      background: #00f2ff;
+      color: #000;
+      padding: 14px 30px;
+      border-radius: 12px;
+      font-size: 1.1em;
+      transition: 0.3s;
+      box-shadow: 0 0 20px #00f2ff;
+    }
+    .hero a:hover {
+      background: #00bcd4;
+      box-shadow: 0 0 40px #00f2ff;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      color: #0070f3;
+    @keyframes glow {
+      from {text-shadow: 0 0 20px #00f2ff;}
+      to {text-shadow: 0 0 40px #00f2ff, 0 0 80px #0070f3;}
     }
+    @keyframes fadeDown {from{opacity:0; transform:translateY(-40px);} to{opacity:1; transform:translateY(0);}}
+    @keyframes fadeUp {from{opacity:0; transform:translateY(40px);} to{opacity:1; transform:translateY(0);}}
 
-    header p {
-      margin: 5px 0 0;
-      color: #ccc;
-    }
-
+    /* ====== Content ====== */
     .content {
-      padding: 40px 20px;
+      padding: 120px 20px 60px;
       max-width: 1200px;
       margin: auto;
     }
-
     .content h2 {
-      font-size: 2em;
+      font-size: 2.5em;
       margin-bottom: 20px;
-      border-right: 4px solid #0070f3;
-      padding-right: 10px;
+      border-right: 5px solid #00f2ff;
+      padding-right: 12px;
       display: inline-block;
+      color: #00f2ff;
+    }
+    .content p {
+      font-size: 1.2em;
+      color: #ccc;
+      line-height: 1.8;
     }
 
-    .content p {
-      font-size: 1.1em;
-      color: #ddd;
+    /* ====== Games Section ====== */
+    .games-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .game {
+      background: #111;
+      border-radius: 18px;
+      padding: 25px;
+      border: 1px solid #222;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      perspective: 1000px;
+    }
+    .game:hover {
+      transform: rotateY(8deg) translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+      border-color: #00f2ff;
+    }
+    .game h3 {
+      color: #00f2ff;
+      margin-bottom: 12px;
+      font-size: 1.5em;
+    }
+    .game p {
+      color: #bbb;
+      font-size: 1em;
+      margin-bottom: 20px;
       line-height: 1.6;
     }
-
-    .games-section {
-      margin-top: 40px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    @media (min-width: 700px) {
-      .games-section {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .games-section {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-    }
-
-    .game {
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: right;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid #333;
-    }
-
-    .game:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-      border-color: #0070f3;
-    }
-
-    .game h3 {
-      margin: 0 0 10px;
-      font-size: 1.5em;
-      color: #0070f3;
-    }
-
-    .game p {
-      font-size: 1em;
-      color: #ccc;
-      margin-bottom: 15px;
-    }
-
     .game a {
       text-decoration: none;
-      background: #0070f3;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 6px;
-      font-size: 0.9em;
-      transition: background 0.3s ease;
+      background: #00f2ff;
+      color: #000;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 15px #00f2ff;
+      transition: 0.3s;
     }
+    .game a:hover {background: #00bcd4; box-shadow: 0 0 35px #00f2ff;}
 
-    .game a:hover {
-      background: #005bb5;
-    }
-
+    /* ====== Footer ====== */
     footer {
       background: #111;
       color: #777;
       text-align: center;
-      padding: 20px;
-      border-top: 2px solid #0070f3;
-      margin-top: 40px;
+      padding: 25px;
+      border-top: 2px solid #00f2ff;
+      margin-top: 60px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
     <h1>Supergiant Games Studio EG</h1>
-    <p>تطوير ألعاب بإبداع واحترافية - أحمد إسلام</p>
+    <nav>
+      <a href="#about">عن الشركة</a>
+      <a href="#games">ألعابنا</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
   </header>
 
-  <div class="content">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div>
+      <h2>🎮 نصنع العوالم… لتعيشها</h2>
+      <h1>Supergiant Games Studio EG</h1>
+      <p>نصمم ألعابًا استثنائية مليئة بالإبداع، الحركة، والتحدي، لتمنحك تجربة لا تُنسى.</p>
+      <a href="#games">استعرض ألعابنا</a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <div class="content" id="about">
     <h2>عن الشركة</h2>
     <p>
-      Supergiant Games Studio EG هي شركة مصرية متخصصة في تطوير الألعاب الإلكترونية، بقيادة أحمد إسلام.
-      نسعى لتقديم تجارب مبتكرة وممتعة تجمع بين الإبداع والتحدي على طريقة كبار شركات الألعاب العالمية.
+      Supergiant Games Studio EG هي شركة مصرية متخصصة في تطوير الألعاب الإلكترونية، بقيادة أحمد إسلام.  
+      نقدم تجارب غامرة مستوحاة من الشغف والتكنولوجيا الحديثة، على خطى كبرى استوديوهات الألعاب العالمية.  
+      رؤيتنا هي جعل اللعب أكثر من مجرد تسلية، بل تجربة تُغير الواقع.
     </p>
 
+    <!-- Games -->
+    <h2 id="games">ألعابنا</h2>
     <div class="games-section">
-      <!-- Parkour 1.0 -->
       <div class="game">
         <h3>Parkour 1.0</h3>
-        <p>انطلق في عالم من الحركة الحرة والقفز فوق المباني، وتسلق الجدران في لعبة Parkour 1.0.</p>
-        <a href="https://ahmedeslam.itch.io/parkour/devlog/825591/parkour" target="_blank">اعرف المزيد</a>
+        <p>انطلق في عالم من الحركة الحرة والتسلق والقفز فوق المباني في بيئة مثيرة ومليئة بالتحديات.</p>
+        <a href="https://ahmedeslam.itch.io/parkour" target="_blank">جربها الآن</a>
       </div>
-
-      <!-- Parkour 2.0 -->
       <div class="game">
         <h3>Parkour 2.0</h3>
-        <p>استمتع بتحديات جديدة وتحسينات كبيرة في الإصدار الثاني من لعبة Parkour.</p>
-        <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">اعرف المزيد</a>
+        <p>الإصدار المطور من Parkour مع تحسينات مذهلة في الرسومات والحركة لتجربة أكثر تشويقًا.</p>
+        <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">جربها الآن</a>
       </div>
-
-      <!-- Dark Maze -->
       <div class="game">
         <h3>Dark Maze</h3>
-        <p>متاهة مظلمة مليئة بالأسرار، هل تستطيع النجاة؟</p>
-        <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">اعرف المزيد</a>
+        <p>غامر في متاهة مظلمة مليئة بالأسرار، حيث يكمن الخطر في كل زاوية.</p>
+        <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">جربها الآن</a>
       </div>
-
-      <!-- ORCA CHAT -->
       <div class="game">
         <h3>ORCA CHAT</h3>
-        <p>تطبيق دردشة بسيط وخفيف، يتيح تواصل آمن وسريع مع الأصدقاء.</p>
+        <p>تطبيق دردشة آمن وسريع بتجربة بسيطة وخفيفة للتواصل مع الآخرين.</p>
         <a href="https://github.com/shadowahmed5545x/ORCA-CHAT/releases/tag/v1.0" target="_blank">اعرف المزيد</a>
       </div>
     </div>
   </div>
 
-  <footer>
+  <!-- Footer -->
+  <footer id="contact">
     <p>© 2025 Supergiant Games Studio EG. جميع الحقوق محفوظة.</p>
+    <p>تواصل معنا عبر: contact@supergiant-eg.com</p>
   </footer>
 
 </body>
