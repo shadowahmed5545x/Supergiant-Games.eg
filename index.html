@@ -9,14 +9,73 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   font-family:'Cairo',sans-serif;
   direction:rtl;
-  background:#0d0d0d;
+  background:#0a0a0a;
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* ===== Header ===== */
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  animation:fadeOut 3.5s ease forwards;
+}
+
+/* برق */
+.flash{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#fff;
+  opacity:0;
+  animation:flashAnim 1.5s ease;
+  z-index:9998;
+}
+
+@keyframes flashAnim{
+  0%{opacity:0;}
+  10%{opacity:1;}
+  20%{opacity:0;}
+  35%{opacity:0.8;}
+  50%{opacity:0;}
+  100%{opacity:0;}
+}
+
+/* لوجو */
+.logo{
+  position:relative;
+  z-index:9999;
+  font-size:1.8em;
+  text-align:center;
+  color:#ff0000;
+  text-shadow:0 0 20px #ff0000, 0 0 60px #ff0000;
+  animation:zoomGlow 2s ease-in-out;
+  line-height:1.6;
+}
+
+@keyframes zoomGlow{
+  0%{transform:scale(0.3);opacity:0;}
+  50%{transform:scale(1.2);opacity:1;}
+  100%{transform:scale(1);opacity:1;}
+}
+
+@keyframes fadeOut{
+  0%{opacity:1;}
+  80%{opacity:1;}
+  100%{opacity:0;visibility:hidden;}
+}
+
+/* ===== HEADER ===== */
 header{
   position:fixed;
   width:100%;
@@ -37,19 +96,19 @@ header a{
 }
 header a:hover{color:#ff0000}
 
-/* ===== Hero ===== */
+/* ===== HERO ===== */
 .hero{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   text-align:center;
-  background:url('https://images.unsplash.com/photo-1533286041163-fb7a9f83f78f?auto=format&fit=crop&w=1950&q=90') center/cover;
+  background:radial-gradient(circle,#1a0000,#000);
 }
 .hero h1{
   font-size:3em;
   color:#ff0000;
-  text-shadow:0 0 20px #ff0000;
+  text-shadow:0 0 25px #ff0000;
 }
 .hero p{margin:20px 0}
 .hero a{
@@ -58,9 +117,10 @@ header a:hover{color:#ff0000}
   border-radius:10px;
   text-decoration:none;
   color:#fff;
+  box-shadow:0 0 20px #ff0000;
 }
 
-/* ===== Content ===== */
+/* ===== CONTENT ===== */
 .content{
   padding:120px 20px;
   max-width:1200px;
@@ -73,7 +133,7 @@ header a:hover{color:#ff0000}
   padding-right:10px;
 }
 
-/* ===== Games ===== */
+/* ===== GAMES ===== */
 .games{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -81,24 +141,20 @@ header a:hover{color:#ff0000}
 }
 
 .game{
-  background:linear-gradient(145deg,#111,#1a1a1a);
+  background:linear-gradient(145deg,#111,#1a0000);
   padding:20px;
   border-radius:15px;
   transition:.4s;
-  border:1px solid #222;
+  border:1px solid #220000;
 }
 .game:hover{
   transform:translateY(-10px) scale(1.03);
   border-color:#ff0000;
-  box-shadow:0 10px 40px rgba(255,0,0,0.4);
-}
-.game img{
-  width:100%;
-  border-radius:10px;
-  margin-bottom:10px;
+  box-shadow:0 0 30px rgba(255,0,0,0.5);
 }
 .game h3{color:#ff0000}
 .game p{margin:10px 0}
+
 .game a{
   display:inline-block;
   background:#ff0000;
@@ -113,7 +169,7 @@ header a:hover{color:#ff0000}
   box-shadow:0 0 20px #ff0000;
 }
 
-/* ===== Footer ===== */
+/* ===== FOOTER ===== */
 footer{
   text-align:center;
   padding:20px;
@@ -125,6 +181,16 @@ footer{
 
 <body>
 
+<!-- INTRO -->
+<div id="intro">
+  <div class="flash"></div>
+  <div class="logo">
+    Supergiant Games<br>
+    Studio EG
+  </div>
+</div>
+
+<!-- HEADER -->
 <header>
   <h1>Supergiant Games</h1>
   <div>
@@ -134,18 +200,20 @@ footer{
   </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <div>
     <h1>Supergiant Games Studio EG</h1>
-    <p>نصنع ألعاب ممتعة وتجارب قوية 🔥</p>
+    <p>نصنع ألعاب قوية وتجارب نار 🔥</p>
     <a href="#games">استعرض الألعاب</a>
   </div>
 </section>
 
+<!-- CONTENT -->
 <div class="content" id="about">
   <h2>عن الشركة</h2>
   <p>
-    شركة مصرية لتطوير الألعاب بقيادة أحمد إسلام، نهدف لصناعة ألعاب ممتعة وحديثة تنافس عالميًا.
+    شركة تطوير ألعاب مصرية بقيادة أحمد إسلام.
   </p>
 
   <h2 id="games">ألعابنا</h2>
@@ -154,43 +222,38 @@ footer{
 
     <div class="game">
       <h3>Car X Speed</h3>
-      <p>سباقات سرعة قوية وتجربة قيادة مجنونة 🔥</p>
+      <p>سباقات سرعة مجنونة 🔥</p>
       <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank">جرب الآن</a>
     </div>
 
     <div class="game">
       <h3>Parkour 2.0</h3>
-      <p>أفضل تجربة باركور محسنة وجرافيك أقوى</p>
+      <p>تجربة باركور متطورة</p>
       <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">جرب الآن</a>
     </div>
 
     <div class="game">
       <h3>Parkour 1.0</h3>
-      <p>ابدأ مغامرتك في عالم الباركور</p>
+      <p>ابدأ المغامرة</p>
       <a href="https://ahmedeslam.itch.io/parkour" target="_blank">جرب الآن</a>
     </div>
 
     <div class="game">
       <h3>Evil Hunt</h3>
-      <p>لعبة رعب وتحقيق مليئة بالغموض</p>
+      <p>رعب وغموض</p>
       <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank">جرب الآن</a>
     </div>
 
     <div class="game">
       <h3>Dark Maze</h3>
-      <p>متاهة مظلمة مليئة بالأسرار</p>
+      <p>متاهة خطيرة</p>
       <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">جرب الآن</a>
-    </div>
-
-    <div class="game">
-      <h3>ORCA CHAT</h3>
-      <p>تطبيق دردشة سريع وآمن</p>
-      <a href="https://github.com/shadowahmed5545x/ORCA-CHAT/releases/tag/v1.0" target="_blank">تحميل</a>
     </div>
 
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer id="contact">
   <p>© 2025 Supergiant Games Studio EG</p>
   <p>ahmedeskam61@gmail.com</p>
