@@ -23,55 +23,58 @@ body{
   position:fixed;
   width:100%;
   height:100%;
-  background:#000;
+  background:radial-gradient(circle,#120000,#000);
   display:flex;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
   z-index:9999;
-  animation:fadeOut 3.5s ease forwards;
+  animation:fadeOut 4s ease forwards;
 }
 
-/* برق */
-.flash{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:#fff;
-  opacity:0;
-  animation:flashAnim 1.5s ease;
-  z-index:9998;
-}
+#intro audio{display:none}
 
-@keyframes flashAnim{
-  0%{opacity:0;}
-  10%{opacity:1;}
-  20%{opacity:0;}
-  35%{opacity:0.8;}
-  50%{opacity:0;}
-  100%{opacity:0;}
-}
-
-/* لوجو */
-.logo{
-  position:relative;
-  z-index:9999;
-  font-size:1.8em;
+/* LOGO 3D ثابت */
+.logo3d{
+  font-size:2.6em;
   text-align:center;
   color:#ff0000;
-  text-shadow:0 0 20px #ff0000, 0 0 60px #ff0000;
-  animation:zoomGlow 2s ease-in-out;
-  line-height:1.6;
+
+  transform: perspective(900px) rotateX(18deg) rotateY(-10deg);
+
+  text-shadow:
+    0 3px 0 #5a0000,
+    0 10px 25px rgba(0,0,0,0.8),
+    0 0 25px #ff0000,
+    0 0 60px #ff0000;
+
+  animation:fadeIn 2s ease;
+  line-height:1.4;
 }
 
-@keyframes zoomGlow{
-  0%{transform:scale(0.3);opacity:0;}
-  50%{transform:scale(1.2);opacity:1;}
-  100%{transform:scale(1);opacity:1;}
+/* نص صغير */
+.subtitle{
+  margin-top:10px;
+  color:#aaa;
+  font-size:1em;
+  letter-spacing:2px;
+  opacity:0;
+  animation:fadeSub 2s ease 1s forwards;
+}
+
+@keyframes fadeIn{
+  0%{opacity:0;transform:scale(0.5) perspective(900px) rotateX(40deg);}
+  100%{opacity:1;transform:perspective(900px) rotateX(18deg) rotateY(-10deg);}
+}
+
+@keyframes fadeSub{
+  0%{opacity:0;transform:translateY(10px);}
+  100%{opacity:1;transform:translateY(0);}
 }
 
 @keyframes fadeOut{
   0%{opacity:1;}
-  80%{opacity:1;}
+  85%{opacity:1;}
   100%{opacity:0;visibility:hidden;}
 }
 
@@ -92,7 +95,6 @@ header a{
   color:#fff;
   margin-left:20px;
   text-decoration:none;
-  transition:.3s;
 }
 header a:hover{color:#ff0000}
 
@@ -111,6 +113,7 @@ header a:hover{color:#ff0000}
   text-shadow:0 0 25px #ff0000;
 }
 .hero p{margin:20px 0}
+
 .hero a{
   background:#ff0000;
   padding:12px 25px;
@@ -144,14 +147,15 @@ header a:hover{color:#ff0000}
   background:linear-gradient(145deg,#111,#1a0000);
   padding:20px;
   border-radius:15px;
-  transition:.4s;
   border:1px solid #220000;
+  transition:.3s;
 }
 .game:hover{
-  transform:translateY(-10px) scale(1.03);
+  transform:translateY(-8px);
   border-color:#ff0000;
-  box-shadow:0 0 30px rgba(255,0,0,0.5);
+  box-shadow:0 0 25px rgba(255,0,0,0.4);
 }
+
 .game h3{color:#ff0000}
 .game p{margin:10px 0}
 
@@ -162,11 +166,6 @@ header a:hover{color:#ff0000}
   border-radius:8px;
   color:#fff;
   text-decoration:none;
-  transition:.3s;
-}
-.game a:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 20px #ff0000;
 }
 
 /* ===== FOOTER ===== */
@@ -183,10 +182,17 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="flash"></div>
-  <div class="logo">
+  <audio autoplay>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c3d1c1b1b.mp3?filename=game-start-6104.mp3">
+  </audio>
+
+  <div class="logo3d">
     Supergiant Games<br>
     Studio EG
+  </div>
+
+  <div class="subtitle">
+    Game Studio
   </div>
 </div>
 
@@ -204,53 +210,61 @@ footer{
 <section class="hero">
   <div>
     <h1>Supergiant Games Studio EG</h1>
-    <p>نصنع ألعاب قوية وتجارب نار 🔥</p>
+    <p>نصنع ألعاب ممتعة وتجارب قوية ومميزة 🔥</p>
     <a href="#games">استعرض الألعاب</a>
   </div>
 </section>
 
 <!-- CONTENT -->
 <div class="content" id="about">
-  <h2>عن الشركة</h2>
-  <p>
-    شركة تطوير ألعاب مصرية بقيادة أحمد إسلام.
-  </p>
 
-  <h2 id="games">ألعابنا</h2>
+<h2>عن الشركة</h2>
+<p>
+شركة تطوير ألعاب مصرية تعمل على تطوير ألعاب وتجارب ترفيهية على الهواتف والكمبيوتر.
+</p>
 
-  <div class="games">
+<h2 id="games">ألعابنا</h2>
 
-    <div class="game">
-      <h3>Car X Speed</h3>
-      <p>سباقات سرعة مجنونة 🔥</p>
-      <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank">جرب الآن</a>
-    </div>
+<div class="games">
 
-    <div class="game">
-      <h3>Parkour 2.0</h3>
-      <p>تجربة باركور متطورة</p>
-      <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">جرب الآن</a>
-    </div>
-
-    <div class="game">
-      <h3>Parkour 1.0</h3>
-      <p>ابدأ المغامرة</p>
-      <a href="https://ahmedeslam.itch.io/parkour" target="_blank">جرب الآن</a>
-    </div>
-
-    <div class="game">
-      <h3>Evil Hunt</h3>
-      <p>رعب وغموض</p>
-      <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank">جرب الآن</a>
-    </div>
-
-    <div class="game">
-      <h3>Dark Maze</h3>
-      <p>متاهة خطيرة</p>
-      <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">جرب الآن</a>
-    </div>
-
+  <div class="game">
+    <h3>Car X Speed</h3>
+    <p>لعبة سباقات ممتعة وسريعة 🚗</p>
+    <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank">جرب الآن</a>
   </div>
+
+  <div class="game">
+    <h3>Parkour 2.0</h3>
+    <p>تجربة باركور محسنة</p>
+    <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">جرب الآن</a>
+  </div>
+
+  <div class="game">
+    <h3>Parkour 1.0</h3>
+    <p>النسخة الأولى من اللعبة</p>
+    <a href="https://ahmedeslam.itch.io/parkour" target="_blank">جرب الآن</a>
+  </div>
+
+  <div class="game">
+    <h3>Evil Hunt</h3>
+    <p>لعبة رعب وغموض 😱</p>
+    <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank">جرب الآن</a>
+  </div>
+
+  <div class="game">
+    <h3>Dark Maze</h3>
+    <p>متاهة مليئة بالأسرار 🌑</p>
+    <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">جرب الآن</a>
+  </div>
+
+  <div class="game">
+    <h3>ORCA CHAT</h3>
+    <p>تطبيق دردشة بسيط وسريع 💬</p>
+    <a href="https://apkpure.com/orca-chat/com.supergiantgamesstudioeg.orcachat" target="_blank">تحميل</a>
+  </div>
+
+</div>
+
 </div>
 
 <!-- FOOTER -->
