@@ -1,277 +1,415 @@
-<!DOCTYPE html>
+
+# Create the HTML without images, using gradient backgrounds instead
+html_no_images = '''<!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Supergiant Games Studio EG</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;direction:rtl;background:#050505;color:#fff;overflow-x:hidden;scroll-behavior:smooth}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff0000,#800000);border-radius:3px}
 
-body{
-  font-family:'Cairo',sans-serif;
-  direction:rtl;
-  background:#0a0a0a;
-  color:#fff;
-  overflow-x:hidden;
-}
-
-/* ===== INTRO ===== */
-#intro{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle,#120000,#000);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:9999;
-  animation:fadeOut 4s ease forwards;
-}
-
-#intro audio{display:none}
-
-/* LOGO 3D ثابت */
-.logo3d{
-  font-size:2.6em;
-  text-align:center;
-  color:#ff0000;
-
-  transform: perspective(900px) rotateX(18deg) rotateY(-10deg);
-
-  text-shadow:
-    0 3px 0 #5a0000,
-    0 10px 25px rgba(0,0,0,0.8),
-    0 0 25px #ff0000,
-    0 0 60px #ff0000;
-
-  animation:fadeIn 2s ease;
-  line-height:1.4;
-}
-
-/* نص صغير */
-.subtitle{
-  margin-top:10px;
-  color:#aaa;
-  font-size:1em;
-  letter-spacing:2px;
-  opacity:0;
-  animation:fadeSub 2s ease 1s forwards;
-}
-
-@keyframes fadeIn{
-  0%{opacity:0;transform:scale(0.5) perspective(900px) rotateX(40deg);}
-  100%{opacity:1;transform:perspective(900px) rotateX(18deg) rotateY(-10deg);}
-}
-
-@keyframes fadeSub{
-  0%{opacity:0;transform:translateY(10px);}
-  100%{opacity:1;transform:translateY(0);}
-}
-
-@keyframes fadeOut{
-  0%{opacity:1;}
-  85%{opacity:1;}
-  100%{opacity:0;visibility:hidden;}
-}
+/* ===== ENHANCED INTRO ===== */
+#intro{position:fixed;width:100%;height:100%;background:radial-gradient(ellipse at center,#1a0000 0%,#000 70%);display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;animation:introOut 5.5s ease forwards;overflow:hidden}
+#intro::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 50%,rgba(255,0,0,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,0,0,0.05) 0%,transparent 40%);animation:bgPulse 4s ease infinite alternate}
+#intro::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at center,transparent 30%,#000 90%)}
+.logo3d{position:relative;z-index:2;font-size:3.5em;text-align:center;color:#ff0000;font-weight:900;transform:perspective(1000px) rotateX(12deg) rotateY(-6deg);text-shadow:0 5px 0 #5a0000,0 15px 40px rgba(0,0,0,0.9),0 0 40px #ff0000,0 0 100px rgba(255,0,0,0.5),0 0 150px rgba(255,0,0,0.2);animation:logoPop 1.8s ease;line-height:1.2}
+.subtitle{position:relative;z-index:2;margin-top:20px;color:#888;font-size:1em;letter-spacing:8px;text-transform:uppercase;opacity:0;animation:subIn 1.2s ease 0.6s forwards}
+.loading-bar{position:relative;z-index:2;width:200px;height:2px;background:rgba(255,0,0,0.2);border-radius:2px;margin-top:30px;overflow:hidden;opacity:0;animation:subIn 1s ease 1s forwards}
+.loading-bar::after{content:'';display:block;width:0;height:100%;background:linear-gradient(90deg,#ff0000,#ff4444);animation:loadFill 2.5s ease 1.2s forwards}
+@keyframes bgPulse{0%{opacity:0.5}100%{opacity:1}}
+@keyframes logoPop{0%{opacity:0;transform:scale(0.2) perspective(1000px) rotateX(50deg) rotateY(-25deg)}70%{transform:scale(1.08) perspective(1000px) rotateX(12deg) rotateY(-6deg)}100%{opacity:1;transform:perspective(1000px) rotateX(12deg) rotateY(-6deg)}}
+@keyframes subIn{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes loadFill{0%{width:0}100%{width:100%}}
+@keyframes introOut{0%{opacity:1}85%{opacity:1}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden}}
 
 /* ===== HEADER ===== */
-header{
-  position:fixed;
-  width:100%;
-  top:0;
-  display:flex;
-  justify-content:space-between;
-  padding:15px 40px;
-  background:rgba(0,0,0,0.8);
-  border-bottom:2px solid #ff0000;
-  z-index:1000;
-}
-header h1{color:#ff0000}
-header a{
-  color:#fff;
-  margin-left:20px;
-  text-decoration:none;
-}
-header a:hover{color:#ff0000}
+header{position:fixed;width:100%;top:0;display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:transparent;z-index:1000;transition:all 0.4s ease}
+header.scrolled{padding:14px 60px;background:rgba(5,5,5,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,0,0,0.15)}
+header h1{color:#ff0000;font-size:1.4em;font-weight:900;letter-spacing:1px;text-shadow:0 0 20px rgba(255,0,0,0.3);transition:all 0.3s}
+header.scrolled h1{font-size:1.2em}
+header nav{display:flex;gap:35px}
+header a{color:#aaa;text-decoration:none;font-size:0.9em;font-weight:600;position:relative;padding:6px 0;transition:color 0.3s}
+header a::after{content:'';position:absolute;bottom:0;right:0;width:0;height:2px;background:linear-gradient(90deg,#ff0000,#ff4444);border-radius:1px;transition:width 0.35s ease}
+header a:hover{color:#fff}
+header a:hover::after{width:100%}
 
 /* ===== HERO ===== */
-.hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  background:radial-gradient(circle,#1a0000,#000);
-}
-.hero h1{
-  font-size:3em;
-  color:#ff0000;
-  text-shadow:0 0 25px #ff0000;
-}
-.hero p{margin:20px 0}
-
-.hero a{
-  background:#ff0000;
-  padding:12px 25px;
-  border-radius:10px;
-  text-decoration:none;
-  color:#fff;
-  box-shadow:0 0 20px #ff0000;
-}
+.hero{height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 30% 50%,rgba(255,0,0,0.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(255,0,0,0.04) 0%,transparent 50%),radial-gradient(ellipse at center,#0a0000 0%,#000 100%)}
+.hero-content{position:relative;z-index:2;padding:0 30px}
+.hero-name{font-size:1em;color:#ff0000;font-weight:700;letter-spacing:6px;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp 1s ease 5s forwards;text-shadow:0 0 20px rgba(255,0,0,0.4)}
+.hero-badge{display:inline-block;background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);color:#ff6666;padding:8px 24px;border-radius:30px;font-size:0.85em;font-weight:600;letter-spacing:3px;margin-bottom:25px;opacity:0;animation:fadeUp 1s ease 5.2s forwards}
+.hero h1{font-size:4.5em;color:#fff;font-weight:900;line-height:1.1;margin-bottom:25px;opacity:0;animation:fadeUp 1.2s ease 5.4s forwards}
+.hero h1 span{color:#ff0000;text-shadow:0 0 40px rgba(255,0,0,0.5)}
+.hero p{font-size:1.3em;color:#777;max-width:550px;margin:0 auto 40px;line-height:1.8;opacity:0;animation:fadeUp 1.2s ease 5.6s forwards}
+.hero-btns{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1.2s ease 5.8s forwards}
+.btn-primary{background:linear-gradient(135deg,#ff0000,#cc0000);padding:16px 40px;border-radius:50px;color:#fff;text-decoration:none;font-weight:700;font-size:1em;box-shadow:0 0 30px rgba(255,0,0,0.3),0 5px 20px rgba(0,0,0,0.4);transition:all 0.3s ease;position:relative;overflow:hidden;border:none;cursor:pointer}
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.6s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,0,0,0.5),0 8px 30px rgba(0,0,0,0.5)}
+.btn-primary:hover::before{left:100%}
+.btn-secondary{background:transparent;padding:16px 40px;border-radius:50px;color:#fff;text-decoration:none;font-weight:700;font-size:1em;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s ease}
+.btn-secondary:hover{border-color:#ff0000;color:#ff0000;box-shadow:0 0 20px rgba(255,0,0,0.2)}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:translateY(0)}}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;animation:fadeUp 1s ease 6.2s forwards,scrollBounce 2s ease infinite 7.2s}
+.scroll-hint span{font-size:0.7em;color:#444;letter-spacing:4px;text-transform:uppercase}
+.scroll-hint .mouse{width:24px;height:40px;border:2px solid #444;border-radius:12px;position:relative}
+.scroll-hint .mouse::after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:4px;height:8px;background:#ff0000;border-radius:2px;animation:scrollWheel 2s ease infinite}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+@keyframes scrollWheel{0%{opacity:1;top:8px}100%{opacity:0;top:20px}}
 
 /* ===== CONTENT ===== */
-.content{
-  padding:120px 20px;
-  max-width:1200px;
-  margin:auto;
-}
-.content h2{
-  color:#ff0000;
-  margin-bottom:20px;
-  border-right:4px solid #ff0000;
-  padding-right:10px;
-}
+.content{padding:120px 20px;max-width:1200px;margin:auto;position:relative;z-index:1}
+.section-label{color:#ff0000;font-size:0.8em;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:15px;opacity:0;transform:translateY(20px);transition:all 0.8s ease}
+.section-label.visible{opacity:1;transform:translateY(0)}
+.section-title{font-size:2.8em;font-weight:900;color:#fff;margin-bottom:20px;line-height:1.2;opacity:0;transform:translateY(30px);transition:all 0.8s ease 0.1s}
+.section-title.visible{opacity:1;transform:translateY(0)}
+.section-title span{color:#ff0000}
+.section-desc{color:#666;font-size:1.15em;line-height:2;max-width:600px;opacity:0;transform:translateY(20px);transition:all 0.8s ease 0.2s}
+.section-desc.visible{opacity:1;transform:translateY(0)}
 
-/* ===== GAMES ===== */
-.games{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:25px;
-}
+/* ===== STATS ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:25px;margin:60px 0}
+.stat{background:linear-gradient(145deg,#0d0d0d,#111);border:1px solid rgba(255,255,255,0.04);border-radius:20px;padding:35px 20px;text-align:center;position:relative;overflow:hidden;transition:all 0.4s ease;opacity:0;transform:translateY(30px)}
+.stat.visible{opacity:1;transform:translateY(0)}
+.stat:nth-child(1){transition-delay:0.1s}
+.stat:nth-child(2){transition-delay:0.2s}
+.stat:nth-child(3){transition-delay:0.3s}
+.stat:nth-child(4){transition-delay:0.4s}
+.stat::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,0,0,0.4),transparent)}
+.stat:hover{border-color:rgba(255,0,0,0.2);transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,0.5)}
+.stat-num{font-size:2.8em;font-weight:900;color:#ff0000;line-height:1}
+.stat-label{color:#555;font-size:0.85em;margin-top:10px;font-weight:600}
 
-.game{
-  background:linear-gradient(145deg,#111,#1a0000);
-  padding:20px;
-  border-radius:15px;
-  border:1px solid #220000;
-  transition:.3s;
-}
-.game:hover{
-  transform:translateY(-8px);
-  border-color:#ff0000;
-  box-shadow:0 0 25px rgba(255,0,0,0.4);
-}
+.divider{width:1px;height:80px;background:linear-gradient(180deg,transparent,rgba(255,0,0,0.3),transparent);margin:80px auto}
 
-.game h3{color:#ff0000}
-.game p{margin:10px 0}
+/* ===== PS5 STYLE GAMES - NO IMAGES ===== */
+.games-section{padding:80px 0}
+.games-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;padding:0 20px;max-width:1200px;margin-left:auto;margin-right:auto}
+.games-header h2{font-size:2em;font-weight:900;color:#fff}
+.games-header h2 span{color:#ff0000}
+.games-header .view-all{color:#888;text-decoration:none;font-size:0.9em;font-weight:600;transition:color 0.3s}
+.games-header .view-all:hover{color:#ff0000}
 
-.game a{
-  display:inline-block;
-  background:#ff0000;
-  padding:10px 15px;
-  border-radius:8px;
-  color:#fff;
-  text-decoration:none;
-}
+.games-carousel{display:flex;gap:25px;padding:0 20px 40px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;max-width:1200px;margin-left:auto;margin-right:auto}
+.games-carousel::-webkit-scrollbar{display:none}
+
+.game-ps5{flex:0 0 280px;scroll-snap-align:start;position:relative;border-radius:20px;overflow:hidden;transition:all 0.4s ease;cursor:pointer;height:380px;background:linear-gradient(180deg,#0d0d0d,#080808);border:1px solid rgba(255,255,255,0.04)}
+.game-ps5:hover{transform:translateY(-10px) scale(1.02);border-color:rgba(255,0,0,0.3);box-shadow:0 30px 60px rgba(0,0,0,0.6),0 0 40px rgba(255,0,0,0.08)}
+.game-ps5:hover .game-ps5-art{transform:scale(1.05)}
+.game-ps5:hover .game-ps5-play{opacity:1;transform:scale(1)}
+
+.game-ps5-art{height:220px;display:flex;align-items:center;justify-content:center;position:relative;transition:transform 0.5s ease;overflow:hidden}
+.game-ps5-art::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(255,0,0,0.1),rgba(139,0,0,0.2))}
+.game-ps5-art::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:50%;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.8))}
+.game-ps5-art .art-icon{font-size:4em;position:relative;z-index:1;text-shadow:0 0 30px rgba(255,0,0,0.3)}
+
+.game-ps5-overlay{position:absolute;bottom:0;left:0;width:100%;height:60%;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.9) 100%)}
+.game-ps5-content{position:absolute;bottom:0;left:0;width:100%;padding:25px}
+.game-ps5-tag{background:rgba(255,0,0,0.15);color:#ff6666;padding:4px 12px;border-radius:20px;font-size:0.7em;font-weight:700;margin-bottom:10px;display:inline-block;border:1px solid rgba(255,0,0,0.2)}
+.game-ps5-title{font-size:1.3em;font-weight:900;color:#fff;margin-bottom:8px}
+.game-ps5-desc{font-size:0.85em;color:#aaa;line-height:1.6;margin-bottom:15px}
+.game-ps5-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);width:60px;height:60px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.3s ease;box-shadow:0 0 30px rgba(255,0,0,0.5);z-index:2}
+.game-ps5-play::after{content:'▶';color:#fff;font-size:1.5em;margin-left:4px}
+.game-ps5-link{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10}
+
+/* ===== GRID GAMES - NO IMAGES ===== */
+.games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1200px;margin:0 auto;padding:0 20px}
+.game-grid-card{background:linear-gradient(180deg,#0d0d0d,#080808);border:1px solid rgba(255,255,255,0.04);border-radius:24px;overflow:hidden;position:relative;transition:all 0.5s ease;opacity:0;transform:translateY(40px)}
+.game-grid-card.visible{opacity:1;transform:translateY(0)}
+.game-grid-card:nth-child(1){transition-delay:0.1s}
+.game-grid-card:nth-child(2){transition-delay:0.2s}
+.game-grid-card:nth-child(3){transition-delay:0.3s}
+.game-grid-card:nth-child(4){transition-delay:0.4s}
+.game-grid-card:nth-child(5){transition-delay:0.5s}
+.game-grid-card:nth-child(6){transition-delay:0.6s}
+.game-grid-card:hover{border-color:rgba(255,0,0,0.3);transform:translateY(-12px) scale(1.01);box-shadow:0 30px 60px rgba(0,0,0,0.6),0 0 40px rgba(255,0,0,0.08)}
+
+.game-grid-art{height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.game-grid-art::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(255,0,0,0.08),rgba(139,0,0,0.15))}
+.game-grid-art::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:60%;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.9))}
+.game-grid-art .art-icon{font-size:3.5em;position:relative;z-index:1;text-shadow:0 0 25px rgba(255,0,0,0.25)}
+
+.game-grid-body{padding:25px}
+.game-grid-title{color:#fff;font-size:1.2em;font-weight:700;margin-bottom:10px}
+.game-grid-desc{color:#666;font-size:0.9em;line-height:1.7;margin-bottom:15px}
+.game-grid-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.game-grid-tags span{background:rgba(255,0,0,0.06);color:#ff5555;padding:4px 12px;border-radius:20px;font-size:0.72em;font-weight:600;border:1px solid rgba(255,0,0,0.1)}
+.game-grid-btn{display:block;text-align:center;background:linear-gradient(135deg,#ff0000,#cc0000);color:#fff;text-decoration:none;padding:14px;border-radius:14px;font-weight:700;font-size:0.95em;transition:all 0.3s ease}
+.game-grid-btn:hover{box-shadow:0 10px 30px rgba(255,0,0,0.3);transform:translateY(-2px)}
 
 /* ===== FOOTER ===== */
-footer{
-  text-align:center;
-  padding:20px;
-  border-top:2px solid #ff0000;
-  margin-top:40px;
-}
+footer{background:linear-gradient(180deg,transparent,#030303);border-top:1px solid rgba(255,255,255,0.03);padding:80px 20px 40px;text-align:center;position:relative;z-index:1}
+.footer-logo{font-size:2em;font-weight:900;color:#ff0000;margin-bottom:15px;text-shadow:0 0 30px rgba(255,0,0,0.2)}
+.footer-tagline{color:#333;font-size:0.95em;margin-bottom:40px}
+.footer-links{display:flex;justify-content:center;gap:40px;margin-bottom:50px}
+.footer-links a{color:#555;text-decoration:none;font-size:0.9em;font-weight:600;transition:color 0.3s;position:relative}
+.footer-links a::after{content:'';position:absolute;bottom:-5px;right:0;width:0;height:1px;background:#ff0000;transition:width 0.3s}
+.footer-links a:hover{color:#ff0000}
+.footer-links a:hover::after{width:100%}
+.footer-social{display:flex;justify-content:center;gap:15px;margin-bottom:40px}
+.footer-social a{width:50px;height:50px;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:#777;text-decoration:none;font-size:1.3em;transition:all 0.3s ease}
+.footer-social a:hover{background:rgba(255,0,0,0.1);border-color:rgba(255,0,0,0.3);color:#ff0000;transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,0,0,0.15)}
+.footer-copy{color:#333;font-size:0.85em}
+
+@media(max-width:900px){.games-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:3em}.section-title{font-size:2em}.game-ps5{flex:0 0 240px}}
+@media(max-width:600px){header{padding:15px 25px}header nav{gap:20px}header a{font-size:0.8em}.hero h1{font-size:2.2em}.hero p{font-size:1em}.hero-name{font-size:0.85em;letter-spacing:3px}.stats{grid-template-columns:1fr}.content{padding:80px 15px}.games-grid{grid-template-columns:1fr}.game-ps5{flex:0 0 200px;height:340px}.game-ps5-art{height:180px}}
 </style>
 </head>
-
 <body>
+<canvas id="bg"></canvas>
 
 <!-- INTRO -->
 <div id="intro">
-  <audio autoplay>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c3d1c1b1b.mp3?filename=game-start-6104.mp3">
-  </audio>
-
-  <div class="logo3d">
-    Supergiant Games<br>
-    Studio EG
-  </div>
-
-  <div class="subtitle">
-    Game Studio
-  </div>
+  <div class="logo3d">Supergiant Games<br>Studio EG</div>
+  <div class="subtitle">Game Studio</div>
+  <div class="loading-bar"></div>
 </div>
 
 <!-- HEADER -->
-<header>
+<header id="main-header">
   <h1>Supergiant Games</h1>
-  <div>
+  <nav>
     <a href="#about">عن الشركة</a>
     <a href="#games">الألعاب</a>
     <a href="#contact">تواصل</a>
-  </div>
+  </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div>
-    <h1>Supergiant Games Studio EG</h1>
-    <p>نصنع ألعاب ممتعة وتجارب قوية ومميزة 🔥</p>
-    <a href="#games">استعرض الألعاب</a>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-name">Supergiant Games Studio EG</div>
+    <div class="hero-badge">🎮 استوديو ألعاب مصري</div>
+    <h1>نصنع <span>عوالم</span><br>لا تُنسى</h1>
+    <p>تجارب ترفيهية فريدة على الهواتف والكمبيوتر، نجمع بين الإبداع والتقنية لنخلق ألعاباً تبقى في الذاكرة</p>
+    <div class="hero-btns">
+      <a href="#games" class="btn-primary">استعرض الألعاب</a>
+      <a href="#about" class="btn-secondary">اعرف أكتر</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="mouse"></div>
   </div>
 </section>
 
-<!-- CONTENT -->
+<!-- ABOUT -->
 <div class="content" id="about">
-
-<h2>عن الشركة</h2>
-<p>
-شركة تطوير ألعاب مصرية تعمل على تطوير ألعاب وتجارب ترفيهية على الهواتف والكمبيوتر.
-</p>
-
-<h2 id="games">ألعابنا</h2>
-
-<div class="games">
-
-  <div class="game">
-    <h3>Car X Speed</h3>
-    <p>لعبة سباقات ممتعة وسريعة 🚗</p>
-    <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank">جرب الآن</a>
+  <div class="section-label">من نحن</div>
+  <h2 class="section-title">نبني <span>المستقبل</span><br>بالإبداع والشغف</h2>
+  <p class="section-desc">شركة تطوير ألعاب مصرية ناشئة، نعمل على تطوير ألعاب وتجارب ترفيهية مميزة على الهواتف والكمبيوتر. هدفنا خلق عوالم فريدة تجمع بين القصة القوية والتجربة السلسة.</p>
+  
+  <div class="stats">
+    <div class="stat"><div class="stat-num">6+</div><div class="stat-label">ألعاب منشورة</div></div>
+    <div class="stat"><div class="stat-num">2025</div><div class="stat-label">سنة التأسيس</div></div>
+    <div class="stat"><div class="stat-num">PC</div><div class="stat-label">+ Mobile</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">شغف للإبداع</div></div>
   </div>
-
-  <div class="game">
-    <h3>Parkour 2.0</h3>
-    <p>تجربة باركور محسنة</p>
-    <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank">جرب الآن</a>
-  </div>
-
-  <div class="game">
-    <h3>Parkour 1.0</h3>
-    <p>النسخة الأولى من اللعبة</p>
-    <a href="https://ahmedeslam.itch.io/parkour" target="_blank">جرب الآن</a>
-  </div>
-
-  <div class="game">
-    <h3>Evil Hunt</h3>
-    <p>لعبة رعب وغموض 😱</p>
-    <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank">جرب الآن</a>
-  </div>
-
-  <div class="game">
-    <h3>Dark Maze</h3>
-    <p>متاهة مليئة بالأسرار 🌑</p>
-    <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank">جرب الآن</a>
-  </div>
-
-  <div class="game">
-    <h3>ORCA CHAT</h3>
-    <p>تطبيق دردشة بسيط وسريع 💬</p>
-    <a href="https://apkpure.com/orca-chat/com.supergiantgamesstudioeg.orcachat" target="_blank">تحميل</a>
-  </div>
-
 </div>
 
+<div class="divider"></div>
+
+<!-- PS5 STYLE GAMES CAROUSEL - NO IMAGES -->
+<div class="games-section" id="games">
+  <div class="games-header">
+    <h2>ألعابنا <span>المميزة</span></h2>
+    <a href="#all-games" class="view-all">عرض الكل →</a>
+  </div>
+  
+  <div class="games-carousel">
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">🏎️</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">سباقات</div>
+        <div class="game-ps5-title">Car X Speed</div>
+        <div class="game-ps5-desc">لعبة سباقات ممتعة وسريعة مع رسومات مذهلة</div>
+      </div>
+      <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank" class="game-ps5-link"></a>
+    </div>
+    
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">🏃</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">باركور</div>
+        <div class="game-ps5-title">Parkour 2.0</div>
+        <div class="game-ps5-desc">تجربة باركور محسنة مع مستويات أكثر تحدياً</div>
+      </div>
+      <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank" class="game-ps5-link"></a>
+    </div>
+    
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">🤸</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">كلاسيكي</div>
+        <div class="game-ps5-title">Parkour 1.0</div>
+        <div class="game-ps5-desc">النسخة الأولى من لعبة الباركور الكلاسيكية</div>
+      </div>
+      <a href="https://ahmedeslam.itch.io/parkour" target="_blank" class="game-ps5-link"></a>
+    </div>
+    
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">👻</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">رعب</div>
+        <div class="game-ps5-title">Evil Hunt</div>
+        <div class="game-ps5-desc">لعبة رعب وغموض ستبقيك على حافة مقعدك</div>
+      </div>
+      <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank" class="game-ps5-link"></a>
+    </div>
+    
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">🌑</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">غموض</div>
+        <div class="game-ps5-title">Dark Maze</div>
+        <div class="game-ps5-desc">متاهة مليئة بالأسرار في عالم مظلم ومثير</div>
+      </div>
+      <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank" class="game-ps5-link"></a>
+    </div>
+    
+    <div class="game-ps5">
+      <div class="game-ps5-art"><div class="art-icon">💬</div></div>
+      <div class="game-ps5-overlay"></div>
+      <div class="game-ps5-play"></div>
+      <div class="game-ps5-content">
+        <div class="game-ps5-tag">تطبيق</div>
+        <div class="game-ps5-title">ORCA CHAT</div>
+        <div class="game-ps5-desc">تطبيق دردشة بسيط وسريع على أندرويد</div>
+      </div>
+      <a href="https://apkpure.com/orca-chat/com.supergiantgamesstudioeg.orcachat" target="_blank" class="game-ps5-link"></a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALL GAMES GRID - NO IMAGES -->
+<div class="content" id="all-games">
+  <div class="section-label">المكتبة الكاملة</div>
+  <h2 class="section-title">جميع <span>ألعابنا</span></h2>
+  <p class="section-desc">استكشف مجموعتنا الكاملة من الألعاب المتنوعة</p>
+  
+  <div class="games-grid">
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">🏎️</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">Car X Speed</div>
+        <div class="game-grid-desc">لعبة سباقات ممتعة وسريعة مع رسومات مذهلة وتحكم سلس</div>
+        <div class="game-grid-tags"><span>سباقات</span><span>أكشن</span><span>PC</span></div>
+        <a href="https://ahmedeslam.itch.io/car-x-speed" target="_blank" class="game-grid-btn">جرب الآن</a>
+      </div>
+    </div>
+    
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">🏃</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">Parkour 2.0</div>
+        <div class="game-grid-desc">تجربة باركور محسنة مع مستويات أكثر تحدياً وحركة واقعية</div>
+        <div class="game-grid-tags"><span>باركور</span><span>مغامرة</span><span>PC</span></div>
+        <a href="https://ahmedeslam.itch.io/parkour-2" target="_blank" class="game-grid-btn">جرب الآن</a>
+      </div>
+    </div>
+    
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">🤸</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">Parkour 1.0</div>
+        <div class="game-grid-desc">النسخة الأولى من لعبة الباركور الكلاسيكية التي بدأت رحلتنا</div>
+        <div class="game-grid-tags"><span>باركور</span><span>كلاسيكي</span><span>PC</span></div>
+        <a href="https://ahmedeslam.itch.io/parkour" target="_blank" class="game-grid-btn">جرب الآن</a>
+      </div>
+    </div>
+    
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">👻</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">Evil Hunt</div>
+        <div class="game-grid-desc">لعبة رعب وغموض ستبقيك على حافة مقعدك طوال الوقت</div>
+        <div class="game-grid-tags"><span>رعب</span><span>غموض</span><span>PC</span></div>
+        <a href="https://ahmedeslam.itch.io/evil-hunt" target="_blank" class="game-grid-btn">جرب الآن</a>
+      </div>
+    </div>
+    
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">🌑</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">Dark Maze</div>
+        <div class="game-grid-desc">متاهة مليئة بالأسرار والمخاطر في عالم مظلم ومثير</div>
+        <div class="game-grid-tags"><span>متاهة</span><span>غموض</span><span>PC</span></div>
+        <a href="https://ahmedeslam.itch.io/darkmaze" target="_blank" class="game-grid-btn">جرب الآن</a>
+      </div>
+    </div>
+    
+    <div class="game-grid-card">
+      <div class="game-grid-art"><div class="art-icon">💬</div></div>
+      <div class="game-grid-body">
+        <div class="game-grid-title">ORCA CHAT</div>
+        <div class="game-grid-desc">تطبيق دردشة بسيط وسريع لتبادل الرسائل بسهولة على أندرويد</div>
+        <div class="game-grid-tags"><span>تطبيق</span><span>دردشة</span><span>Android</span></div>
+        <a href="https://apkpure.com/orca-chat/com.supergiantgamesstudioeg.orcachat" target="_blank" class="game-grid-btn">تحميل</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- FOOTER -->
 <footer id="contact">
-  <p>© 2025 Supergiant Games Studio EG</p>
-  <p>ahmedeskam61@gmail.com</p>
+  <div class="footer-logo">Supergiant Games Studio EG</div>
+  <div class="footer-tagline">نصنع الألعاب التي تستحق أن تُلعب</div>
+  <div class="footer-links">
+    <a href="#about">عن الشركة</a>
+    <a href="#games">الألعاب</a>
+    <a href="mailto:ahmedeskam61@gmail.com">تواصل معنا</a>
+  </div>
+  <div class="footer-social">
+    <a href="mailto:ahmedeskam61@gmail.com" title="Email">✉</a>
+    <a href="https://ahmedeslam.itch.io/" target="_blank" title="itch.io">🎮</a>
+  </div>
+  <div class="footer-copy">© 2025 Supergiant Games Studio EG — ahmedeskam61@gmail.com</div>
 </footer>
 
+<script>
+const c=document.getElementById('bg'),x=c.getContext('2d');
+let w,h,p=[];
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+resize();addEventListener('resize',resize);
+class P{constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*1.5+0.3;this.dx=(Math.random()-0.5)*0.3;this.dy=(Math.random()-0.5)*0.3;this.o=Math.random()*0.4+0.05}update(){this.x+=this.dx;this.y+=this.dy;if(this.x<0||this.x>w)this.dx*=-1;if(this.y<0||this.y>h)this.dy*=-1}draw(){x.fillStyle=`rgba(255,0,0,${this.o})`;x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);x.fill()}}
+for(let i=0;i<80;i++)p.push(new P());
+function anim(){x.clearRect(0,0,w,h);p.forEach((a,i)=>{a.update();a.draw();p.slice(i+1).forEach(b=>{let dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120)x.strokeStyle=`rgba(255,0,0,${0.08*(1-d/120)})`,x.lineWidth=0.5,x.beginPath(),x.moveTo(a.x,a.y),x.lineTo(b.x,b.y),x.stroke()})});requestAnimationFrame(anim)}
+anim();
+
+const h2=document.getElementById('main-header');
+window.addEventListener('scroll',()=>h2.classList.toggle('scrolled',scrollY>50));
+
+const obs=new IntersectionObserver((e)=>e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')}),{threshold:0.1});
+document.querySelectorAll('.section-label,.section-title,.section-desc,.stat,.game-grid-card').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+</script>
 </body>
-</html>
+</html>'''
+
+with open('/mnt/agents/output/supergiant_games_no_images.html', 'w', encoding='utf-8') as f:
+    f.write(html_no_images)
+
+print("File saved successfully!")
+print(f"File size: {len(html_no_images)} characters")
+
